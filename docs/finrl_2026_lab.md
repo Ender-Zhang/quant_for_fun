@@ -9,6 +9,8 @@
 
 `external_projects/`、`data/processed/` 和 `reports/` 都在 `.gitignore` 中，第三方源码、下载数据、训练模型和回测图不会进入本项目的 git 历史。
 
+每日实战学习安排见 `docs/finrl_daily_practice_plan.md`。
+
 ## 环境
 
 推荐使用 Python 3.11：
