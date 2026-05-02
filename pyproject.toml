@@ -18,6 +18,19 @@ dependencies = [
 dev = [
   "pytest>=7.4",
 ]
+finrl = [
+  "alpaca-py>=0.37",
+  "alpaca-trade-api>=3.2",
+  "gymnasium>=0.29",
+  "matplotlib>=3.7",
+  "pandas-market-calendars>=4.4",
+  "selenium>=4.20,<4.33",
+  "stable-baselines3[extra]>=2.3",
+  "stockstats>=0.5",
+  "webdriver-manager>=4.0",
+  "wrds>=3.2",
+  "yfinance>=0.2.58,<0.2.59",
+]
 
 [tool.setuptools.packages.find]
 include = ["quant_for_fun*"]

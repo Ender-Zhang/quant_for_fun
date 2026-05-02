@@ -47,6 +47,21 @@ tests/           基础测试
 - 用预测概率生成 long / flat 策略信号
 - 输出累计收益、年化收益、最大回撤、Sharpe 等指标
 
+## FinRL 2026 外部实验
+
+如果你想先复用现成的金融 RL 项目，项目支持把第三方仓库隔离放在
+`external_projects/`，再通过一个轻量入口跑 FinRL v0.3.8 的 2026 股票交易实验：
+
+```bash
+/opt/homebrew/bin/python3.11 -m venv .venv
+.venv/bin/python -m pip install -e ".[dev,finrl]"
+.venv/bin/python -m quant_for_fun.examples.run_finrl_2026 --preset quick
+```
+
+默认 quick 模式会训练 A2C、DDPG、PPO、TD3、SAC，并把数据、模型和回测图写到
+`data/processed/finrl_2026/` 与 `reports/finrl_2026/`。这两个目录和
+`external_projects/` 都不会进入 git。更多说明见 `docs/finrl_2026_lab.md`。
+
 ## 非大众化美股选股因子
 
 项目现在也包含一条面向美股大中盘、多头月度选股的因子研究链路：
