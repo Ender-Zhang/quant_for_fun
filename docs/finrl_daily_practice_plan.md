@@ -28,6 +28,20 @@
   --timesteps 5000
 ```
 
+换成 popular100 股票池：
+
+```bash
+.venv/bin/python -m quant_for_fun.examples.run_finrl_2026 \
+  --preset quick \
+  --universe popular100 \
+  --data-source akshare \
+  --agents recurrent_ppo \
+  --timesteps 5000
+```
+
+说明：`popular100` 使用 Nasdaq-100 风格的大盘高流动性股票池，并确保包含 ISRG；
+`--data-source auto` 下 popular100 会默认使用 AkShare，减少 Yahoo 批量下载不稳定的问题。
+
 输出重点看：
 
 - `reports/finrl_2026/backtest_summary.csv`
@@ -35,6 +49,18 @@
 - `reports/finrl_2026/actions_*.csv`
 - `reports/finrl_2026/account_value_*.csv`
 - `reports/finrl_2026/experiment_config.json`
+
+## 近期待办
+
+按这个顺序推进，先保证每一步都有可复现记录，再进入下一步：
+
+- 跑一遍默认 quick preset，确认 A2C、DDPG、PPO、TD3、SAC 的主流程仍能完整生成 summary 和曲线。
+- 用 `--universe popular100 --data-source akshare --agents recurrent_ppo` 跑一次小步数实验，确认 100 只股票的数据覆盖、日期对齐和 ISRG 纳入结果。
+- 单独跑 `trpo,tqc,crossq,recurrent_ppo` 扩展 agent，并把输出放到 `reports/finrl_2026_extra_agents`，不要覆盖默认结果。
+- 对比默认 5 个 agent、扩展 agent、MVO 和 DJI 的 total return、Sharpe、max drawdown，记录到 `docs/journal/YYYY-MM-DD.md`。
+- 把表现最好的组合拆成年份回测，至少覆盖 2021、2022、2023、2024、2025。
+- 检查 `actions_*.csv`，记录是否存在过度交易、单资产集中或回撤期间继续加仓。
+- 根据回测结果决定下一轮只改一个变量：股票池、seed、timesteps、交易成本、reward 或风控。
 
 ## 每日固定节奏
 
@@ -159,6 +185,18 @@ agent：
 ```bash
 .venv/bin/python -m quant_for_fun.examples.run_finrl_2026 --preset quick --agents a2c,ppo,sac
 ```
+
+可选扩展：
+
+```bash
+.venv/bin/python -m quant_for_fun.examples.run_finrl_2026 \
+  --preset quick \
+  --agents trpo,tqc,crossq,recurrent_ppo \
+  --report-dir reports/finrl_2026_extra_agents
+```
+
+说明：TRPO、TQC、CrossQ 可以复用当前连续动作交易环境；RecurrentPPO 用 LSTM 给 PPO 增加
+时间记忆；GRPO 主要来自大语言模型推理训练，并不是当前 FinRL 股票交易环境的即插即用 agent。
 
 产出：
 

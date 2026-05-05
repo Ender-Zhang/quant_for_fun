@@ -19,12 +19,14 @@ dev = [
   "pytest>=7.4",
 ]
 finrl = [
+  "akshare>=1.18",
   "alpaca-py>=0.37",
   "alpaca-trade-api>=3.2",
   "gymnasium>=0.29",
   "matplotlib>=3.7",
   "pandas-market-calendars>=4.4",
   "selenium>=4.20,<4.33",
+  "sb3-contrib>=2.8,<2.9",
   "stable-baselines3[extra]>=2.3",
   "stockstats>=0.5",
   "webdriver-manager>=4.0",
